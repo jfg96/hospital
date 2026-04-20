@@ -15,6 +15,6 @@ Gestionar la conexión JDBC con la base de datos SQLite.
 Connection con = DriverManager.getConnection("jdbc:sqlite:hospital.db");
 ```
 
-## Notas
+## Nota
 - La cadena de conexión puede externalizarse en un archivo `config.properties` dentro de `resources/`.
 - Gestionar bien el cierre de la conexión para evitar fugas de recursos.
