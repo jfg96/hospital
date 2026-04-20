@@ -15,12 +15,12 @@ public class Medico extends Trabajador {
      * @param nombre nombre del médico
      * @param direccion dirección del médico
      * @param telefono teléfono del médico
-     * @param DNI DNI del médico
+     * @param dni DNI del médico
      * @param sueldo sueldo del médico
      * @param especialidad especialidad médica del médico
      */
-    public Medico(String nombre, String direccion, String telefono, String DNI, double sueldo, String especialidad) {
-        super(nombre, direccion, telefono, DNI, sueldo);
+    public Medico(String nombre, String direccion, String telefono, String dni, double sueldo, String especialidad) {
+        super(nombre, direccion, telefono, dni, sueldo);
         this.especialidad = especialidad;
     }
 
