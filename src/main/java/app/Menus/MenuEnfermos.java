@@ -1,11 +1,33 @@
 package app.Menus;
-
 import java.util.Scanner;
 
-public class MenuEnfermos {
+/**
+ * Clase MenuEnfermos - Gestión del módulo de Enfermos/Pacientes del Hospital.
+ *
+ * Esta clase proporciona un menú interactivo para la administración de pacientes
+ * (enfermos) del hospital, incluyendo registro, listado, actualización y eliminación.
+ *
+ * @author Antonio Manuel
+ * @version 1.0
+ * @since 21/04/2026
+ * Clase que implementa el menú de gestión de enfermos/pacientes hospitalarios.
+ * Permite realizar operaciones CRUD sobre los registros de pacientes
+ * del sistema hospitalario.
+ */
+public class MenuEnfermos extends MenuBase {
+    /** Scanner estático para leer entrada del usuario desde la consola */
     static Scanner input = new Scanner(System.in);
-    // Muestra las opciones por pantalla
-    private void mostrarMenu() {
+
+    /**
+     * Muestra el menú de opciones para la gestión de enfermos.
+     * Las opciones disponibles son:
+     * 1. Registrar Enfermo
+     * 2. Listar Enfermos
+     * 3. Actualizar Enfermo
+     * 4. Eliminar Enfermo
+     * 5. Salir
+     */
+    protected void mostrarMenu() {
         System.out.println("╔══════════════════════════╗");
         System.out.println("║      MENÚ ENFERMOS       ║");
         System.out.println("╠══════════════════════════╣");
@@ -19,7 +41,16 @@ public class MenuEnfermos {
         System.out.print("   Elige una opción: ");
     }
 
-    // Lógica del menú
+    @Override
+    protected void ejecutarOpcion(String opcion) {
+    }
+    /**
+     * Ejecuta el menú de gestión de enfermos.
+     *
+     * Muestra un bucle interactivo que permite al usuario seleccionar
+     * una opción y ejecutarla hasta que decida salir (opción 5).
+     * Controla todas las operaciones relacionadas con los pacientes del hospital.
+     */
     public void ejecutar() {
         int opcion;
         do {
@@ -35,7 +66,20 @@ public class MenuEnfermos {
             }
         } while (opcion != 5);
     }
-    private void ejecutarOpcion(String opcion) {
-        // lógica de cada opción
+
+    /**
+     * Ejecuta la operación seleccionada por el usuario.
+     */
+
+
+
+    @Override
+    protected int getOpcionSalida() {
+        return 0;
+    }
+
+    @Override
+    protected boolean procesarOpcion(int opcion) {
+        return false;
     }
 }

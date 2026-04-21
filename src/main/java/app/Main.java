@@ -1,15 +1,9 @@
+package app;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 /**
- *
  * @author: Antonio Manuel Rodriguez Palenzuela
  * @since 20/04/2026
- * @Description:
- */
-
-package app;
-import java.util.Scanner;
-import java.util.InputMismatchException;
-
-/**
  * Clase Main - Punto de entrada del sistema de gestión hospitalaria.
  * Esta clase controla el menú principal y la navegación entre los diferentes
  * módulos del sistema (Plantas, Habitaciones, Médicos, etc.).

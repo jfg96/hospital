@@ -1,16 +1,32 @@
+/**
+ * Clase MenuAuxiliares - Gestión del módulo de Auxiliares de Enfermería.
+ *
+ * Esta clase proporciona un menú interactivo para la administración de auxiliares
+ * de enfermería del hospital, incluyendo registro, consulta, modificación y eliminación.
+ *
+ * @author Antonio Manuel
+ * @version 1.0
+ * @since 21/04/2026
+ */
 package app.Menus;
 
-import java.util.Scanner;
-
 /**
- *
- * @author Antonio Manuel Rodriguez Palenzuela
- * @description: Clase que muestra el menú de auxiliares y sus opciones
+ * Clase que implementa el menú de gestión de auxiliares de enfermería.
+ * Extiende MenuBase para reutilizar la lógica común de menús.
  */
-public class MenuAuxiliares {
-    static Scanner input = new Scanner(System.in);
+public class MenuAuxiliares extends MenuBase {
 
-    private void mostrarMenu() {
+    /**
+     * Muestra el menú de opciones para la gestión de auxiliares.
+     * Las opciones disponibles son:
+     * 1. Registrar Auxiliar
+     * 2. Consultar Auxiliares
+     * 3. Modificar Auxiliar
+     * 4. Eliminar Auxiliar
+     * 5. Salir
+     */
+    @Override
+    protected void mostrarMenu() {
         System.out.println("╔══════════════════════════╗");
         System.out.println("║     MENÚ AUXILIARES      ║");
         System.out.println("╠══════════════════════════╣");
@@ -24,6 +40,17 @@ public class MenuAuxiliares {
         System.out.print("   Elige una opción: ");
     }
 
+    @Override
+    protected void ejecutarOpcion(String opcion) {
+
+    }
+
+    /**
+     * Ejecuta el menú de gestión de auxiliares.
+     *
+     * Muestra un bucle interactivo que permite al usuario seleccionar
+     * una opción y ejecutarla hasta que decida salir (opción 5).
+     */
     public void ejecutar() {
         int opcion;
         do {
@@ -39,8 +66,13 @@ public class MenuAuxiliares {
             }
         } while (opcion != 5);
     }
+    @Override
+    protected int getOpcionSalida() {
+        return 0;
+    }
 
-    private void ejecutarOpcion(String opcion) {
-        // lógica de cada opción
+    @Override
+    protected boolean procesarOpcion(int opcion) {
+        return false;
     }
 }

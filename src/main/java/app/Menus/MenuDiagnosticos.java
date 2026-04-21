@@ -1,11 +1,25 @@
 package app.Menus;
 
-import java.util.Scanner;
+/**
+ *
+ * @Author: Antonio Manuel Rodriguez Palenzuela
+ * @Description: Clase que implementa el menú de gestión de diagnósticos médicos.
+ * Extiende MenuBase para reutilizar la lógica común de menús.
+ * Permite realizar operaciones CRUD sobre los registros de diagnósticos.
+ * Las opciones disponibles son:
+ * 1. Registrar Diagnóstico
+ * 2. Consultar Historial (filtrar por médico o fecha)
+ * 3. Modificar Diagnóstico
+ * 4. Eliminar Diagnóstico
+ * 5. Salir
+ * @Version: 1.0
+ * @Since: 21/04/2026
+ */
 
-public class MenuDiagnosticos {
-    static Scanner input = new Scanner(System.in);
+public class MenuDiagnosticos extends MenuBase {  // 1. extends MenuBase
 
-    private void mostrarMenu() {
+    @Override
+    protected void mostrarMenu() {
         System.out.println("╔══════════════════════════════╗");
         System.out.println("║      MENÚ DIAGNÓSTICOS       ║");
         System.out.println("╠══════════════════════════════╣");
@@ -19,23 +33,26 @@ public class MenuDiagnosticos {
         System.out.print("   Elige una opción: ");
     }
 
-    public void ejecutar() {
-        int opcion;
-        do {
-            mostrarMenu();
-            opcion = input.nextInt();
-            switch (opcion) {
-                case 1 -> ejecutarOpcion("Registrar Diagnóstico");
-                case 2 -> ejecutarOpcion("Consultar Historial de diagnósticos (filtrar por médico o fecha)");
-                case 3 -> ejecutarOpcion("Modificar Diagnóstico");
-                case 4 -> ejecutarOpcion("Eliminar Diagnóstico");
-                case 5 -> System.out.println("Saliendo...");
-                default -> System.out.println("Opción no válida");
-            }
-        } while (opcion != 5);
+    @Override
+    protected boolean procesarOpcion(int opcion) {  // 2. switch aquí, NO en ejecutar()
+        switch (opcion) {
+            case 1 -> ejecutarOpcion("Registrar Diagnóstico");
+            case 2 -> ejecutarOpcion("Consultar Historial (por médico o fecha)");
+            case 3 -> ejecutarOpcion("Modificar Diagnóstico");
+            case 4 -> ejecutarOpcion("Eliminar Diagnóstico");
+            case 5 -> { return false; }  // señal de salida
+            default -> System.out.println("❌ Opción no válida.");
+        }
+        return true;
     }
 
-    private void ejecutarOpcion(String opcion) {
-        // lógica de cada opción
+    @Override
+    protected int getOpcionSalida() { return 5; }  // 3. opción de salida
+
+    @Override
+    protected void ejecutarOpcion(String opcion) {
+        System.out.println("✓ Ejecutando: " + opcion);
+        // aquí irá la lógica real
     }
+    // 4. NO redefinir ejecutar(), NO tener Scanner propio
 }
