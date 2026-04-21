@@ -1,18 +1,18 @@
-package app;
+package app.Menus;
 
 import java.util.Scanner;
 
-public class MenuDiagnosticos {
+public class MenuHospitalizaciones {
     static Scanner input = new Scanner(System.in);
 
     private void mostrarMenu() {
         System.out.println("╔══════════════════════════════╗");
-        System.out.println("║      MENÚ DIAGNÓSTICOS       ║");
+        System.out.println("║   MENÚ HOSPITALIZACIONES     ║");
         System.out.println("╠══════════════════════════════╣");
-        System.out.println("║  1. Registrar Diagnóstico    ║");
-        System.out.println("║  2. Consultar Historial      ║");
-        System.out.println("║  3. Modificar Diagnóstico    ║");
-        System.out.println("║  4. Eliminar Diagnóstico     ║");
+        System.out.println("║  1. Registrar Hospitalización║");
+        System.out.println("║  2. Consultar Hospitalizacion║");
+        System.out.println("║  3. Registrar Alta           ║");
+        System.out.println("║  4. Eliminar Registro        ║");
         System.out.println("╠══════════════════════════════╣");
         System.out.println("║  5. Salir                    ║");
         System.out.println("╚══════════════════════════════╝");
@@ -25,10 +25,10 @@ public class MenuDiagnosticos {
             mostrarMenu();
             opcion = input.nextInt();
             switch (opcion) {
-                case 1 -> ejecutarOpcion("Registrar Diagnóstico");
-                case 2 -> ejecutarOpcion("Consultar Historial de diagnósticos (filtrar por médico o fecha)");
-                case 3 -> ejecutarOpcion("Modificar Diagnóstico");
-                case 4 -> ejecutarOpcion("Eliminar Diagnóstico");
+                case 1 -> ejecutarOpcion("Registrar Hospitalización");
+                case 2 -> ejecutarOpcion("Consultar Hospitalizaciones (activas/históricas, por enfermo o habitación)");
+                case 3 -> ejecutarOpcion("Registrar Alta (actualizar fecha de alta)");
+                case 4 -> ejecutarOpcion("Eliminar/Cancelar Registro de Hospitalización");
                 case 5 -> System.out.println("Saliendo...");
                 default -> System.out.println("Opción no válida");
             }
