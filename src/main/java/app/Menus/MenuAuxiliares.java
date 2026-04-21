@@ -2,6 +2,11 @@ package app.Menus;
 
 import java.util.Scanner;
 
+/**
+ *
+ * @author Antonio Manuel Rodriguez Palenzuela
+ * @description: Clase que muestra el menú de auxiliares y sus opciones
+ */
 public class MenuAuxiliares {
     static Scanner input = new Scanner(System.in);
 
