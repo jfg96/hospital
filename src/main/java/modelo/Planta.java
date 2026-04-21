@@ -2,6 +2,7 @@ package modelo;
 
 /**
  * Clase que representa una planta del hospital.
+ *
  * @author Carlos Fernández
  */
 public class Planta {
@@ -20,9 +21,10 @@ public class Planta {
 
     /**
      * Constructor que inicializa una planta con los datos especificados.
-     * @param numeroPlanta número de la planta
+     *
+     * @param numeroPlanta         número de la planta
      * @param cantidadHabitaciones cantidad de habitaciones
-     * @param especialidad especialidad médica de la planta
+     * @param especialidad         especialidad médica de la planta
      */
     public Planta(int numeroPlanta, int cantidadHabitaciones, String especialidad) {
         this.numeroPlanta = numeroPlanta;
@@ -32,6 +34,7 @@ public class Planta {
 
     /**
      * Obtiene el número de la planta.
+     *
      * @return número de la planta
      */
     public int getNumeroPlanta() {
@@ -40,6 +43,7 @@ public class Planta {
 
     /**
      * Establece el número de la planta.
+     *
      * @param numeroPlanta nuevo número de la planta
      */
     public void setNumeroPlanta(int numeroPlanta) {
@@ -48,6 +52,7 @@ public class Planta {
 
     /**
      * Obtiene la cantidad de habitaciones de la planta.
+     *
      * @return cantidad de habitaciones
      */
     public int getCantidadHabitaciones() {
@@ -56,6 +61,7 @@ public class Planta {
 
     /**
      * Establece la cantidad de habitaciones de la planta.
+     *
      * @param cantidadHabitaciones nueva cantidad de habitaciones
      */
     public void setCantidadHabitaciones(int cantidadHabitaciones) {
@@ -64,6 +70,7 @@ public class Planta {
 
     /**
      * Obtiene la especialidad médica de la planta.
+     *
      * @return especialidad médica
      */
     public String getEspecialidad() {
@@ -72,6 +79,7 @@ public class Planta {
 
     /**
      * Establece la especialidad médica de la planta.
+     *
      * @param especialidad nueva especialidad médica
      */
     public void setEspecialidad(String especialidad) {
@@ -80,6 +88,7 @@ public class Planta {
 
     /**
      * Retorna una representación en String de la planta.
+     *
      * @return cadena con los datos de la planta
      */
     @Override
@@ -87,3 +96,4 @@ public class Planta {
         return "Planta{" + "nº=" + numeroPlanta + ", especialidad='" + especialidad + '\'' +
                 ", habitaciones=" + cantidadHabitaciones + '}';
     }
+}
