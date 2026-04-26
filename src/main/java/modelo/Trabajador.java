@@ -25,6 +25,10 @@ public abstract class Trabajador {
      * Sueldo del trabajador.
      */
     private double sueldo;
+    /**
+     * Identificador único del trabajador (generado por la BD).
+     */
+    private int idTrabajador;
 
     /**
      * Constructor que inicializa un trabajador con los datos especificados.
@@ -120,6 +124,25 @@ public abstract class Trabajador {
      */
     public void setSueldo(double sueldo) {
         this.sueldo = sueldo;
+    }
+
+    /**
+     * Obtiene el id único del trabajador (generado por la BD).
+     * @return
+     */
+    public int getIdTrabajador() {
+        return idTrabajador;
+    }
+    /**
+     * Establece el identificador único del trabajador.
+     * NOTA: Este método está pensado para ser utilizado exclusivamente por las clases DAO
+     * tras realizar un INSERT, para sincronizar el objeto en memoria con el ID
+     * autogenerado (AUTOINCREMENT) por la base de datos SQLite.
+     *
+     * @param idTrabajador el ID generado por la base de datos.
+     */
+    public void setIdTrabajador(int idTrabajador) {
+        this.idTrabajador = idTrabajador;
     }
 
     /**
