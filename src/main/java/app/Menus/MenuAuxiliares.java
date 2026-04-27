@@ -1,78 +1,211 @@
-/**
- * Clase MenuAuxiliares - Gestión del módulo de Auxiliares de Enfermería.
- *
- * Esta clase proporciona un menú interactivo para la administración de auxiliares
- * de enfermería del hospital, incluyendo registro, consulta, modificación y eliminación.
- *
- * @author Antonio Manuel
- * @version 1.0
- * @since 21/04/2026
- */
-package app.Menus;
+package app;
+
+import dao.AuxiliarDAO;
+import dao.impl.AuxiliarDAOImpl;
+import modelo.Auxiliar;
+
+import java.util.List;
 
 /**
- * Clase que implementa el menú de gestión de auxiliares de enfermería.
- * Extiende MenuBase para reutilizar la lógica común de menús.
+ * Submenú de consola para la gestión de auxiliares de enfermería.
+ * @author Kyle
  */
-public class MenuAuxiliares extends MenuBase {
+public class MenuAuxiliares {
 
-    /**
-     * Muestra el menú de opciones para la gestión de auxiliares.
-     * Las opciones disponibles son:
-     * 1. Registrar Auxiliar
-     * 2. Consultar Auxiliares
-     * 3. Modificar Auxiliar
-     * 4. Eliminar Auxiliar
-     * 5. Salir
-     */
-    @Override
-    protected void mostrarMenu() {
-        System.out.println("╔══════════════════════════╗");
-        System.out.println("║     MENÚ AUXILIARES      ║");
-        System.out.println("╠══════════════════════════╣");
-        System.out.println("║  1. Registrar Auxiliar   ║");
-        System.out.println("║  2. Consultar Auxiliares ║");
-        System.out.println("║  3. Modificar Auxiliar   ║");
-        System.out.println("║  4. Eliminar Auxiliar    ║");
-        System.out.println("╠══════════════════════════╣");
-        System.out.println("║  5. Salir                ║");
-        System.out.println("╚══════════════════════════╝");
-        System.out.print("   Elige una opción: ");
-    }
+    private final AuxiliarDAO dao = new AuxiliarDAOImpl();
 
-    @Override
-    protected void ejecutarOpcion(String opcion) {
-
-    }
-
-    /**
-     * Ejecuta el menú de gestión de auxiliares.
-     *
-     * Muestra un bucle interactivo que permite al usuario seleccionar
-     * una opción y ejecutarla hasta que decida salir (opción 5).
-     */
-    public void ejecutar() {
+    public void mostrar() {
         int opcion;
         do {
-            mostrarMenu();
-            opcion = input.nextInt();
+            Utilidades.titulo("GESTIÓN DE AUXILIARES");
+            System.out.println("  1. Añadir auxiliar");
+            System.out.println("  2. Listar todos los auxiliares");
+            System.out.println("  3. Buscar auxiliar");
+            System.out.println("  4. Modificar auxiliar");
+            System.out.println("  5. Eliminar auxiliar");
+            System.out.println("  0. Volver al menú principal");
+            Utilidades.separador();
+            opcion = Utilidades.leerInt("Selecciona una opción: ");
+
             switch (opcion) {
-                case 1 -> ejecutarOpcion("Registrar Auxiliar");
-                case 2 -> ejecutarOpcion("Consultar Auxiliares (filtrar por nombre, DNI o planta)");
-                case 3 -> ejecutarOpcion("Modificar Auxiliar");
-                case 4 -> ejecutarOpcion("Eliminar Auxiliar");
-                case 5 -> System.out.println("Saliendo...");
-                default -> System.out.println("Opción no válida");
+                case 1 -> añadir();
+                case 2 -> listar();
+                case 3 -> buscar();
+                case 4 -> modificar();
+                case 5 -> eliminar();
+                case 0 -> System.out.println("  Volviendo al menú principal...");
+                default -> System.out.println("  [!] Opción no válida.");
             }
-        } while (opcion != 5);
-    }
-    @Override
-    protected int getOpcionSalida() {
-        return 0;
+        } while (opcion != 0);
     }
 
-    @Override
-    protected boolean procesarOpcion(int opcion) {
-        return false;
+    private void añadir() {
+        Utilidades.titulo("NUEVO AUXILIAR");
+        try {
+            String nombre    = Utilidades.leerString("Nombre: ");
+            String direccion = Utilidades.leerString("Dirección: ");
+            String telefono  = Utilidades.leerTelefono("Teléfono: ");
+            String dni       = Utilidades.leerDni("DNI: ");
+            double sueldo    = Utilidades.leerDoublePositivo("Sueldo: ");
+            int idPlanta     = Utilidades.leerIntPositivo("Número de planta asignada: ");
+
+            Auxiliar auxiliar = new Auxiliar(nombre, direccion, telefono, dni, sueldo, idPlanta);
+            dao.insertar(auxiliar);
+            System.out.println("  [OK] Auxiliar registrado correctamente.");
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo registrar el auxiliar: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void listar() {
+        Utilidades.titulo("LISTADO DE AUXILIARES");
+        try {
+            List<Auxiliar> lista = dao.listar();
+            if (lista.isEmpty()) {
+                System.out.println("  No hay auxiliares registrados.");
+            } else {
+                for (Auxiliar a : lista) {
+                    System.out.println("  [ID " + a.getIdTrabajador() + "] " + a);
+                }
+                System.out.println("\n  Total: " + lista.size() + " auxiliar(es).");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo obtener el listado: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void buscar() {
+        Utilidades.titulo("BUSCAR AUXILIAR");
+        System.out.println("  1. Por ID");
+        System.out.println("  2. Por DNI");
+        System.out.println("  3. Por nombre");
+        System.out.println("  4. Por planta asignada");
+        int criterio = Utilidades.leerInt("Selecciona criterio: ");
+
+        try {
+            switch (criterio) {
+                case 1 -> {
+                    int id = Utilidades.leerIntPositivo("ID del auxiliar: ");
+                    Auxiliar a = dao.buscarPorId(id);
+                    if (a != null) System.out.println("  " + a);
+                    else System.out.println("  No se encontró el auxiliar con ID " + id);
+                }
+                case 2 -> {
+                    String dni = Utilidades.leerDni("DNI: ");
+                    Auxiliar a = dao.buscarPorDni(dni);
+                    if (a != null) System.out.println("  " + a);
+                    else System.out.println("  No se encontró el auxiliar con DNI " + dni);
+                }
+                case 3 -> {
+                    String nombre = Utilidades.leerString("Nombre a buscar: ");
+                    List<Auxiliar> resultados = dao.buscarPorNombre(nombre);
+                    if (resultados.isEmpty()) {
+                        System.out.println("  No se encontraron resultados.");
+                    } else {
+                        resultados.forEach(a -> System.out.println("  " + a));
+                    }
+                }
+                case 4 -> {
+                    int planta = Utilidades.leerIntPositivo("Número de planta: ");
+                    List<Auxiliar> resultados = dao.buscarPorPlanta(planta);
+                    if (resultados.isEmpty()) {
+                        System.out.println("  No hay auxiliares en la planta " + planta);
+                    } else {
+                        resultados.forEach(a -> System.out.println("  " + a));
+                    }
+                }
+                default -> System.out.println("  [!] Criterio no válido.");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] Error durante la búsqueda: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void modificar() {
+        Utilidades.titulo("MODIFICAR AUXILIAR");
+        try {
+            int id = Utilidades.leerIntPositivo("ID del auxiliar a modificar: ");
+            Auxiliar a = dao.buscarPorId(id);
+
+            if (a == null) {
+                System.out.println("  [!] No se encontró el auxiliar con ID " + id);
+                Utilidades.pausar();
+                return;
+            }
+
+            System.out.println("  Datos actuales: " + a);
+            System.out.println("  (Deja el campo vacío para mantener el valor actual)\n");
+
+            String nombre = Utilidades.leerStringOpcional("Nuevo nombre [" + a.getNombre() + "]: ");
+            if (!nombre.isEmpty()) a.setNombre(nombre);
+
+            String direccion = Utilidades.leerStringOpcional("Nueva dirección [" + a.getDireccion() + "]: ");
+            if (!direccion.isEmpty()) a.setDireccion(direccion);
+
+            String telefono = Utilidades.leerStringOpcional("Nuevo teléfono [" + a.getTelefono() + "]: ");
+            if (!telefono.isEmpty()) {
+                if (telefono.matches("\\d{9}")) {
+                    a.setTelefono(telefono);
+                } else {
+                    System.out.println("  [!] Teléfono no válido, se mantiene el anterior.");
+                }
+            }
+
+            String sueldoStr = Utilidades.leerStringOpcional("Nuevo sueldo [" + a.getSueldo() + "]: ");
+            if (!sueldoStr.isEmpty()) {
+                try {
+                    double nuevoSueldo = Double.parseDouble(sueldoStr);
+                    if (nuevoSueldo > 0) a.setSueldo(nuevoSueldo);
+                    else System.out.println("  [!] Sueldo no válido, se mantiene el anterior.");
+                } catch (NumberFormatException ex) {
+                    System.out.println("  [!] Formato no válido, se mantiene el sueldo anterior.");
+                }
+            }
+
+            String plantaStr = Utilidades.leerStringOpcional("Nueva planta [" + a.getIdPlanta() + "]: ");
+            if (!plantaStr.isEmpty()) {
+                try {
+                    int nuevaPlanta = Integer.parseInt(plantaStr);
+                    if (nuevaPlanta > 0) a.setIdPlanta(nuevaPlanta);
+                    else System.out.println("  [!] Planta no válida, se mantiene la anterior.");
+                } catch (NumberFormatException ex) {
+                    System.out.println("  [!] Formato no válido, se mantiene la planta anterior.");
+                }
+            }
+
+            dao.actualizar(a);
+            System.out.println("  [OK] Auxiliar actualizado correctamente.");
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo modificar el auxiliar: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void eliminar() {
+        Utilidades.titulo("ELIMINAR AUXILIAR");
+        try {
+            int id = Utilidades.leerIntPositivo("ID del auxiliar a eliminar: ");
+            Auxiliar a = dao.buscarPorId(id);
+
+            if (a == null) {
+                System.out.println("  [!] No se encontró el auxiliar con ID " + id);
+                Utilidades.pausar();
+                return;
+            }
+
+            System.out.println("  Se eliminará: " + a);
+            if (Utilidades.confirmar("¿Estás seguro?")) {
+                dao.eliminar(id);
+                System.out.println("  [OK] Auxiliar eliminado.");
+            } else {
+                System.out.println("  Operación cancelada.");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo eliminar el auxiliar: " + e.getMessage());
+        }
+        Utilidades.pausar();
     }
 }

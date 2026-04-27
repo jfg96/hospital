@@ -1,98 +1,168 @@
-package app.Menus;
+package app;
+
+import dao.PlantaDAO;
+import dao.impl.PlantaDAOImpl;
+import modelo.Planta;
+
+import java.util.List;
+
 /**
- * Clase MenuPlantas - Gestión del módulo de Plantas del Hospital.
- *
- * Esta clase proporciona un menú interactivo para la administración de plantas
- * del hospital, incluyendo operaciones de alta, consulta, modificación y eliminación.
- *
- * @author Antonio Manuel
- * @version 1.0
- * @since 21/04/2026
- * Clase que implementa el menú de gestión de plantas hospitalarias.
- * Extiende MenuBase para reutilizar la lógica común de menús.
- * Permite realizar operaciones CRUD (Create, Read, Update, Delete) sobre
- * los registros de plantas del sistema.
+ * Submenú de consola para la gestión de plantas del hospital.
+ * @author Kyle
  */
-public class MenuPlantas extends MenuBase {
+public class MenuPlantas {
 
-    /**
-     * Muestra el menú de opciones para la gestión de plantas.
-     * Las opciones disponibles son:
-     * 1. Alta de Planta
-     * 2. Consultar Plantas
-     * 3. Modificar Planta
-     * 4. Eliminar Planta
-     * 5. Salir
-     */
-    @Override
-    protected void mostrarMenu() {
-        System.out.println("╔══════════════════════════╗");
-        System.out.println("║       MENÚ PLANTAS       ║");
-        System.out.println("╠══════════════════════════╣");
-        System.out.println("║  1. Alta de Planta       ║");
-        System.out.println("║  2. Consultar Plantas    ║");
-        System.out.println("║  3. Modificar Planta     ║");
-        System.out.println("║  4. Eliminar Planta      ║");
-        System.out.println("╠══════════════════════════╣");
-        System.out.println("║  5. Salir                ║");
-        System.out.println("╚══════════════════════════╝");
-        System.out.print("   Elige una opción: ");
-    }
+    private final PlantaDAO dao = new PlantaDAOImpl();
 
-    /**
-     * Procesa la opción seleccionada por el usuario.
-     * 
-     * @param opcion El número de opción seleccionada (1-5)
-     * @return true para continuar el menú, false para salir
-     */
-    @Override
-    protected boolean procesarOpcion(int opcion) {
-        switch (opcion) {
-            case 1 -> ejecutarOpcion("Alta de Planta");
-            case 2 -> ejecutarOpcion("Consultar Plantas (filtrar por especialidad)");
-            case 3 -> ejecutarOpcion("Modificar Planta");
-            case 4 -> ejecutarOpcion("Eliminar Planta");
-            case 5 -> {
-                System.out.println("Saliendo...");
-                return false;
+    public void mostrar() {
+        int opcion;
+        do {
+            Utilidades.titulo("GESTIÓN DE PLANTAS");
+            System.out.println("  1. Añadir planta");
+            System.out.println("  2. Listar todas las plantas");
+            System.out.println("  3. Buscar planta");
+            System.out.println("  4. Modificar planta");
+            System.out.println("  5. Eliminar planta");
+            System.out.println("  0. Volver al menú principal");
+            Utilidades.separador();
+            opcion = Utilidades.leerInt("Selecciona una opción: ");
+
+            switch (opcion) {
+                case 1 -> añadir();
+                case 2 -> listar();
+                case 3 -> buscar();
+                case 4 -> modificar();
+                case 5 -> eliminar();
+                case 0 -> System.out.println("  Volviendo al menú principal...");
+                default -> System.out.println("  [!] Opción no válida.");
             }
-            default -> System.out.println("❌ Opción no válida. Por favor, elige una opción entre 1 y 5.");
-        }
-        return true;
+        } while (opcion != 0);
     }
 
-    /**
-     * Retorna la opción de salida del menú de plantas.
-     * 
-     * @return 5 (opción para salir)
-     */
-    @Override
-    protected int getOpcionSalida() {
-        return 5;
-    }
-
-    /**
-     * Ejecuta la operación seleccionada por el usuario.
-     * 
-     * @param opcion La descripción de la operación a ejecutar
-     *               Puede ser: "Alta de Planta", "Consultar Plantas",
-     *               "Modificar Planta" o "Eliminar Planta"
-     */
-    @Override
-    protected void ejecutarOpcion(String opcion) {
+    private void añadir() {
+        Utilidades.titulo("NUEVA PLANTA");
         try {
-            // Aquí irá la lógica específica de cada opción
-            System.out.println("✓ Ejecutando: " + opcion);
+            int numero           = Utilidades.leerIntPositivo("Número de planta: ");
+            int cantHabitaciones = Utilidades.leerIntPositivo("Cantidad de habitaciones: ");
+            String especialidad  = Utilidades.leerString("Especialidad: ");
+
+            Planta planta = new Planta(numero, cantHabitaciones, especialidad);
+            dao.insertar(planta);
+            System.out.println("  [OK] Planta registrada correctamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al ejecutar la opción: " + e.getMessage());
+            System.out.println("  [ERROR] No se pudo registrar la planta: " + e.getMessage());
         }
+        Utilidades.pausar();
     }
 
-    /**
-     * Ejecuta el menú de gestión de plantas.
-     * El método ejecutar() es heredado de MenuBase.
-     */
-    public static void main(String[] args) {
-        new MenuPlantas().ejecutar();
+    private void listar() {
+        Utilidades.titulo("LISTADO DE PLANTAS");
+        try {
+            List<Planta> lista = dao.listar();
+            if (lista.isEmpty()) {
+                System.out.println("  No hay plantas registradas.");
+            } else {
+                for (Planta p : lista) {
+                    System.out.println("  " + p);
+                }
+                System.out.println("\n  Total: " + lista.size() + " planta(s).");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo obtener el listado: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void buscar() {
+        Utilidades.titulo("BUSCAR PLANTA");
+        System.out.println("  1. Por número de planta");
+        System.out.println("  2. Por especialidad");
+        int criterio = Utilidades.leerInt("Selecciona criterio: ");
+
+        try {
+            switch (criterio) {
+                case 1 -> {
+                    int num = Utilidades.leerIntPositivo("Número de planta: ");
+                    Planta p = dao.buscarPorId(num);
+                    if (p != null) System.out.println("  " + p);
+                    else System.out.println("  No se encontró la planta " + num);
+                }
+                case 2 -> {
+                    String esp = Utilidades.leerString("Especialidad: ");
+                    List<Planta> resultados = dao.buscarPorEspecialidad(esp);
+                    if (resultados.isEmpty()) {
+                        System.out.println("  No se encontraron plantas con esa especialidad.");
+                    } else {
+                        resultados.forEach(p -> System.out.println("  " + p));
+                    }
+                }
+                default -> System.out.println("  [!] Criterio no válido.");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] Error durante la búsqueda: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void modificar() {
+        Utilidades.titulo("MODIFICAR PLANTA");
+        try {
+            int num = Utilidades.leerIntPositivo("Número de la planta a modificar: ");
+            Planta p = dao.buscarPorId(num);
+
+            if (p == null) {
+                System.out.println("  [!] No se encontró la planta " + num);
+                Utilidades.pausar();
+                return;
+            }
+
+            System.out.println("  Datos actuales: " + p);
+            System.out.println("  (Deja el campo vacío para mantener el valor actual)\n");
+
+            String cantStr = Utilidades.leerStringOpcional("Nueva cantidad de habitaciones [" + p.getCantidadHabitaciones() + "]: ");
+            if (!cantStr.isEmpty()) {
+                try {
+                    int cant = Integer.parseInt(cantStr);
+                    if (cant > 0) p.setCantidadHabitaciones(cant);
+                    else System.out.println("  [!] Valor no válido, se mantiene el anterior.");
+                } catch (NumberFormatException ex) {
+                    System.out.println("  [!] Formato no válido, se mantiene el valor anterior.");
+                }
+            }
+
+            String especialidad = Utilidades.leerStringOpcional("Nueva especialidad [" + p.getEspecialidad() + "]: ");
+            if (!especialidad.isEmpty()) p.setEspecialidad(especialidad);
+
+            dao.actualizar(p);
+            System.out.println("  [OK] Planta actualizada correctamente.");
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo modificar la planta: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void eliminar() {
+        Utilidades.titulo("ELIMINAR PLANTA");
+        try {
+            int num = Utilidades.leerIntPositivo("Número de la planta a eliminar: ");
+            Planta p = dao.buscarPorId(num);
+
+            if (p == null) {
+                System.out.println("  [!] No se encontró la planta " + num);
+                Utilidades.pausar();
+                return;
+            }
+
+            System.out.println("  Se eliminará: " + p);
+            if (Utilidades.confirmar("¿Estás seguro?")) {
+                dao.eliminar(num);
+                System.out.println("  [OK] Planta eliminada.");
+            } else {
+                System.out.println("  Operación cancelada.");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo eliminar la planta: " + e.getMessage());
+        }
+        Utilidades.pausar();
     }
 }

@@ -1,89 +1,203 @@
-/**
- * Clase MenuMedicos - Gestión del módulo de Médicos del Hospital.
- *
- * Esta clase proporciona un menú interactivo para la administración de médicos
- * del hospital, incluyendo operaciones de registro, consulta, modificación y eliminación.
- *
- * @author Antonio Manuel
- * @version 1.0
- * @since 21/04/2026
- */
-package app.Menus;
+package app;
+
+import dao.MedicoDAO;
+import dao.impl.MedicoDAOImpl;
+import modelo.Medico;
+
+import java.util.List;
 
 /**
- * Clase que implementa el menú de gestión de médicos hospitalarios.
- * Extiende MenuBase para reutilizar la lógica común de menús.
- * Permite realizar operaciones CRUD sobre los registros de médicos.
+ * Submenú de consola para la gestión de médicos.
+ * @author Kyle
  */
-public class MenuMedicos extends MenuBase {
+public class MenuMedicos {
 
-    /**
-     * Muestra el menú de opciones para la gestión de médicos.
-     * Las opciones disponibles son:
-     * 1. Registrar Médico
-     * 2. Consultar Médicos
-     * 3. Modificar Médico
-     * 4. Eliminar Médico
-     * 5. Salir
-     */
-    @Override
-    protected void mostrarMenu() {
-        System.out.println("╔══════════════════════════╗");
-        System.out.println("║       MENÚ MÉDICOS       ║");
-        System.out.println("╠══════════════════════════╣");
-        System.out.println("║  1. Registrar Médico     ║");
-        System.out.println("║  2. Consultar Médicos    ║");
-        System.out.println("║  3. Modificar Médico     ║");
-        System.out.println("║  4. Eliminar Médico      ║");
-        System.out.println("╠══════════════════════════╣");
-        System.out.println("║  5. Salir                ║");
-        System.out.println("╚══════════════════════════╝");
-        System.out.print("   Elige una opción: ");
-    }
+    private final MedicoDAO dao = new MedicoDAOImpl();
 
-    /**
-     * Procesa la opción seleccionada por el usuario.
-     *
-     * @param opcion El número de opción seleccionada (1-5)
-     * @return true para continuar el menú, false para salir
-     */
-    @Override
-    protected boolean procesarOpcion(int opcion) {
-        switch (opcion) {
-            case 1 -> ejecutarOpcion("Registrar Médico");
-            case 2 -> ejecutarOpcion("Consultar Médicos (filtrar por nombre, especialidad o DNI)");
-            case 3 -> ejecutarOpcion("Modificar Médico");
-            case 4 -> ejecutarOpcion("Eliminar Médico");
-            case 5 -> {
-                System.out.println("Saliendo...");
-                return false;
+    public void mostrar() {
+        int opcion;
+        do {
+            Utilidades.titulo("GESTIÓN DE MÉDICOS");
+            System.out.println("  1. Añadir médico");
+            System.out.println("  2. Listar todos los médicos");
+            System.out.println("  3. Buscar médico");
+            System.out.println("  4. Modificar médico");
+            System.out.println("  5. Eliminar médico");
+            System.out.println("  0. Volver al menú principal");
+            Utilidades.separador();
+            opcion = Utilidades.leerInt("Selecciona una opción: ");
+
+            switch (opcion) {
+                case 1 -> añadir();
+                case 2 -> listar();
+                case 3 -> buscar();
+                case 4 -> modificar();
+                case 5 -> eliminar();
+                case 0 -> System.out.println("  Volviendo al menú principal...");
+                default -> System.out.println("  [!] Opción no válida.");
             }
-            default -> System.out.println("❌ Opción no válida. Por favor, elige una opción entre 1 y 5.");
-        }
-        return true;
+        } while (opcion != 0);
     }
 
-    /**
-     * Retorna la opción de salida del menú de médicos.
-     *
-     * @return 5 (opción para salir)
-     */
-    @Override
-    protected int getOpcionSalida() {
-        return 5;
-    }
-
-    /**
-     * Ejecuta la operación seleccionada por el usuario.
-     * 
-     * @param opcion La descripción de la operación a ejecutar
-     */
-    @Override
-    protected void ejecutarOpcion(String opcion) {
+    private void añadir() {
+        Utilidades.titulo("NUEVO MÉDICO");
         try {
-            System.out.println("✓ Ejecutando: " + opcion);
+            String nombre       = Utilidades.leerString("Nombre: ");
+            String direccion    = Utilidades.leerString("Dirección: ");
+            String telefono     = Utilidades.leerTelefono("Teléfono: ");
+            String dni          = Utilidades.leerDni("DNI: ");
+            double sueldo       = Utilidades.leerDoublePositivo("Sueldo: ");
+            String especialidad = Utilidades.leerString("Especialidad: ");
+
+            Medico medico = new Medico(nombre, direccion, telefono, dni, sueldo, especialidad);
+            dao.insertar(medico);
+            System.out.println("  [OK] Médico registrado correctamente.");
         } catch (Exception e) {
-            System.out.println("❌ Error al ejecutar la opción: " + e.getMessage());
+            System.out.println("  [ERROR] No se pudo registrar el médico: " + e.getMessage());
         }
+        Utilidades.pausar();
+    }
+
+    private void listar() {
+        Utilidades.titulo("LISTADO DE MÉDICOS");
+        try {
+            List<Medico> lista = dao.listar();
+            if (lista.isEmpty()) {
+                System.out.println("  No hay médicos registrados.");
+            } else {
+                for (Medico m : lista) {
+                    System.out.println("  [ID " + m.getIdTrabajador() + "] " + m);
+                }
+                System.out.println("\n  Total: " + lista.size() + " médico(s).");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo obtener el listado: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void buscar() {
+        Utilidades.titulo("BUSCAR MÉDICO");
+        System.out.println("  1. Por ID");
+        System.out.println("  2. Por DNI");
+        System.out.println("  3. Por nombre");
+        System.out.println("  4. Por especialidad");
+        int criterio = Utilidades.leerInt("Selecciona criterio: ");
+
+        try {
+            switch (criterio) {
+                case 1 -> {
+                    int id = Utilidades.leerIntPositivo("ID del médico: ");
+                    Medico m = dao.buscarPorId(id);
+                    if (m != null) System.out.println("  " + m);
+                    else System.out.println("  No se encontró el médico con ID " + id);
+                }
+                case 2 -> {
+                    String dni = Utilidades.leerDni("DNI: ");
+                    Medico m = dao.buscarPorDni(dni);
+                    if (m != null) System.out.println("  " + m);
+                    else System.out.println("  No se encontró el médico con DNI " + dni);
+                }
+                case 3 -> {
+                    String nombre = Utilidades.leerString("Nombre a buscar: ");
+                    List<Medico> resultados = dao.buscarPorNombre(nombre);
+                    if (resultados.isEmpty()) {
+                        System.out.println("  No se encontraron resultados.");
+                    } else {
+                        resultados.forEach(m -> System.out.println("  " + m));
+                    }
+                }
+                case 4 -> {
+                    String esp = Utilidades.leerString("Especialidad: ");
+                    List<Medico> resultados = dao.buscarPorEspecialidad(esp);
+                    if (resultados.isEmpty()) {
+                        System.out.println("  No se encontraron resultados.");
+                    } else {
+                        resultados.forEach(m -> System.out.println("  " + m));
+                    }
+                }
+                default -> System.out.println("  [!] Criterio no válido.");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] Error durante la búsqueda: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void modificar() {
+        Utilidades.titulo("MODIFICAR MÉDICO");
+        try {
+            int id = Utilidades.leerIntPositivo("ID del médico a modificar: ");
+            Medico m = dao.buscarPorId(id);
+
+            if (m == null) {
+                System.out.println("  [!] No se encontró el médico con ID " + id);
+                Utilidades.pausar();
+                return;
+            }
+
+            System.out.println("  Datos actuales: " + m);
+            System.out.println("  (Deja el campo vacío para mantener el valor actual)\n");
+
+            String nombre = Utilidades.leerStringOpcional("Nuevo nombre [" + m.getNombre() + "]: ");
+            if (!nombre.isEmpty()) m.setNombre(nombre);
+
+            String direccion = Utilidades.leerStringOpcional("Nueva dirección [" + m.getDireccion() + "]: ");
+            if (!direccion.isEmpty()) m.setDireccion(direccion);
+
+            String telefono = Utilidades.leerStringOpcional("Nuevo teléfono [" + m.getTelefono() + "]: ");
+            if (!telefono.isEmpty()) {
+                if (telefono.matches("\\d{9}")) {
+                    m.setTelefono(telefono);
+                } else {
+                    System.out.println("  [!] Teléfono no válido, se mantiene el anterior.");
+                }
+            }
+
+            String sueldoStr = Utilidades.leerStringOpcional("Nuevo sueldo [" + m.getSueldo() + "]: ");
+            if (!sueldoStr.isEmpty()) {
+                try {
+                    double nuevoSueldo = Double.parseDouble(sueldoStr);
+                    if (nuevoSueldo > 0) m.setSueldo(nuevoSueldo);
+                    else System.out.println("  [!] Sueldo no válido, se mantiene el anterior.");
+                } catch (NumberFormatException ex) {
+                    System.out.println("  [!] Formato no válido, se mantiene el sueldo anterior.");
+                }
+            }
+
+            String especialidad = Utilidades.leerStringOpcional("Nueva especialidad [" + m.getEspecialidad() + "]: ");
+            if (!especialidad.isEmpty()) m.setEspecialidad(especialidad);
+
+            dao.actualizar(m);
+            System.out.println("  [OK] Médico actualizado correctamente.");
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo modificar el médico: " + e.getMessage());
+        }
+        Utilidades.pausar();
+    }
+
+    private void eliminar() {
+        Utilidades.titulo("ELIMINAR MÉDICO");
+        try {
+            int id = Utilidades.leerIntPositivo("ID del médico a eliminar: ");
+            Medico m = dao.buscarPorId(id);
+
+            if (m == null) {
+                System.out.println("  [!] No se encontró el médico con ID " + id);
+                Utilidades.pausar();
+                return;
+            }
+
+            System.out.println("  Se eliminará: " + m);
+            if (Utilidades.confirmar("¿Estás seguro?")) {
+                dao.eliminar(id);
+                System.out.println("  [OK] Médico eliminado.");
+            } else {
+                System.out.println("  Operación cancelada.");
+            }
+        } catch (Exception e) {
+            System.out.println("  [ERROR] No se pudo eliminar el médico: " + e.getMessage());
+        }
+        Utilidades.pausar();
     }
 }
