@@ -1,5 +1,6 @@
-package app;
+package app.Menus;
 
+import app.Utilidades;
 import dao.HospitalizacionDAO;
 import dao.impl.HospitalizacionDAOImpl;
 import modelo.Hospitalizacion;
@@ -9,7 +10,7 @@ import java.util.List;
 
 /**
  * Submenú de consola para la gestión de hospitalizaciones.
- * @author Kyle
+ * @author Antonio Manuel Rodriguez Palenzuela
  */
 public class MenuHospitalizaciones {
 

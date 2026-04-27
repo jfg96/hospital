@@ -1,5 +1,6 @@
-package app;
+package app.Menus;
 
+import app.Utilidades;
 import dao.HabitacionDAO;
 import dao.impl.HabitacionDAOImpl;
 import modelo.Habitacion;
@@ -8,7 +9,7 @@ import java.util.List;
 
 /**
  * Submenú de consola para la gestión de habitaciones.
- * @author Kyle
+ * @author Antonio Manuel Rodriguez Palenzuela
  */
 public class MenuHabitaciones {
 

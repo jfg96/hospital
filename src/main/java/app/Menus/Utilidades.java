@@ -1,4 +1,4 @@
-package app;
+package app.Menus;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 /**
  * Clase de utilidad para leer y validar entradas del usuario por consola.
- * @author Kyle
+ * @author Antonio Manuel Rodriguez Palenzuela
  */
 public class Utilidades {
 

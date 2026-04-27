@@ -1,5 +1,6 @@
-package app;
+package app.Menus;
 
+import app.Utilidades;
 import dao.DiagnosticoDAO;
 import dao.impl.DiagnosticoDAOImpl;
 import modelo.Diagnostico;
@@ -9,7 +10,7 @@ import java.util.List;
 
 /**
  * Submenú de consola para la gestión de diagnósticos.
- * @author Kyle
+ * @author Antonio Manuel Rodriguez Palenzuela
  */
 public class MenuDiagnosticos {
 

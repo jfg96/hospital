@@ -1,5 +1,6 @@
-package app;
+package app.Menus;
 
+import app.Utilidades;
 import dao.PlantaDAO;
 import dao.impl.PlantaDAOImpl;
 import modelo.Planta;
@@ -8,7 +9,7 @@ import java.util.List;
 
 /**
  * Submenú de consola para la gestión de plantas del hospital.
- * @author Kyle
+ * @author Antonio Manuel Rodriguez Palenzuela
  */
 public class MenuPlantas {
 

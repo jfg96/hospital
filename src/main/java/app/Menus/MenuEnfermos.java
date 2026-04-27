@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Submenú de consola para la gestión de enfermos.
- * @author Kyle
+ * @author Antonio Manuel Rodriguez Palenzuela
  */
 public class MenuEnfermos {
 
