@@ -5,7 +5,7 @@ import dao.impl.*;
 
 /**
  * Punto de entrada de la aplicación de gestión hospitalaria.
- * @author Antonio Manuel Rodriguez Palenzuela 
+ * @author Antonio Manuel Rodriguez Palenzuela
  */
 public class Main {
 
