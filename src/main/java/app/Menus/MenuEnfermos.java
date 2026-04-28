@@ -1,5 +1,6 @@
-package app;
+package app.Menus;
 
+import app.Utilidades;
 import dao.EnfermoDAO;
 import dao.impl.EnfermoDAOImpl;
 import modelo.Enfermo;

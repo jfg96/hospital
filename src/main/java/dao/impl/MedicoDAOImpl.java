@@ -156,7 +156,7 @@ public class MedicoDAOImpl implements MedicoDAO {
     }
 
     private Medico mapear(ResultSet rs) throws SQLException {
-        return new Medico(
+        Medico m = new Medico(
                 rs.getString("nombre"),
                 rs.getString("direccion"),
                 rs.getString("telefono"),
@@ -164,6 +164,8 @@ public class MedicoDAOImpl implements MedicoDAO {
                 rs.getDouble("sueldo"),
                 rs.getString("especialidad")
         );
+        m.setIdTrabajador(rs.getInt("id"));
+        return m;
     }
 }
 

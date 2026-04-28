@@ -157,7 +157,7 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
     }
 
     private Auxiliar mapear(ResultSet rs) throws SQLException {
-        return new Auxiliar(
+        Auxiliar a = new Auxiliar(
                 rs.getString("nombre"),
                 rs.getString("direccion"),
                 rs.getString("telefono"),
@@ -165,6 +165,8 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
                 rs.getDouble("sueldo"),
                 rs.getInt("idPlanta")
         );
+        a.setIdTrabajador(rs.getInt("id"));
+        return a;
     }
 }
 
