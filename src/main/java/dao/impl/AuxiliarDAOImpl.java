@@ -9,10 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de AuxiliarDAO para SQLite.
+ * Implementación de {@link AuxiliarDAO} para SQLite.
+ *
+ * @author Carlos Fernández
  */
 public class AuxiliarDAOImpl implements AuxiliarDAO {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void crearTabla() {
         String sql = """
@@ -34,6 +39,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertar(Auxiliar auxiliar) {
         String sql = "INSERT INTO auxiliares (nombre, direccion, telefono, dni, sueldo, idPlanta) VALUES (?, ?, ?, ?, ?, ?)";
@@ -51,6 +59,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Auxiliar> listar() {
         List<Auxiliar> lista = new ArrayList<>();
@@ -65,6 +76,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Auxiliar buscarPorId(int id) {
         String sql = "SELECT * FROM auxiliares WHERE id = ?";
@@ -80,6 +94,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Auxiliar buscarPorDni(String dni) {
         String sql = "SELECT * FROM auxiliares WHERE dni = ?";
@@ -95,6 +112,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Auxiliar> buscarPorNombre(String nombre) {
         List<Auxiliar> lista = new ArrayList<>();
@@ -111,6 +131,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Auxiliar> buscarPorPlanta(int idPlanta) {
         List<Auxiliar> lista = new ArrayList<>();
@@ -127,6 +150,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizar(Auxiliar auxiliar) {
         String sql = "UPDATE auxiliares SET nombre = ?, direccion = ?, telefono = ?, sueldo = ?, idPlanta = ? WHERE dni = ?";
@@ -144,6 +170,9 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM auxiliares WHERE id = ?";
@@ -156,6 +185,13 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         }
     }
 
+    /**
+     * Convierte una fila del {@link ResultSet} en un objeto {@link Auxiliar}.
+     *
+     * @param rs conjunto de resultados posicionado en la fila a mapear
+     * @return objeto {@link Auxiliar} con los datos de la fila
+     * @throws SQLException si ocurre un error al leer el ResultSet
+     */
     private Auxiliar mapear(ResultSet rs) throws SQLException {
         Auxiliar a = new Auxiliar(
                 rs.getString("nombre"),
@@ -169,4 +205,3 @@ public class AuxiliarDAOImpl implements AuxiliarDAO {
         return a;
     }
 }
-

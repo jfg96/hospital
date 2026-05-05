@@ -10,6 +10,11 @@ import dao.impl.*;
  */
 public class Main {
 
+    /**
+     * Método principal. Inicializa la base de datos, instancia los submenús
+     * y lanza el bucle del menú principal.
+     * @param args argumentos de la línea de comandos (no utilizados)
+     */
     public static void main(String[] args) {
 
         // ── Inicializar tablas en la BD ──────────────────
@@ -60,6 +65,10 @@ public class Main {
         }
     }
 
+    /**
+     * Crea las tablas de la base de datos llamando a {@code crearTabla()} en
+     * cada implementación DAO. Si ya existen, la operación no tiene efecto.
+     */
     private static void inicializarBaseDatos() {
         System.out.println("Inicializando base de datos...");
         new PlantaDAOImpl().crearTabla();
@@ -72,6 +81,9 @@ public class Main {
         System.out.println("Base de datos lista.\n");
     }
 
+    /**
+     * Imprime por consola el menú principal con todas las opciones disponibles.
+     */
     private static void mostrarMenuPrincipal() {
         Utilidades.titulo("SISTEMA DE GESTIÓN HOSPITALARIA");
         System.out.println("  1. Gestión de Enfermos");

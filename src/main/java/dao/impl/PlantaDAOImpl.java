@@ -9,10 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de PlantaDAO para SQLite.
+ * Implementación de {@link PlantaDAO} para SQLite.
+ *
+ * @author Carlos Fernández
  */
 public class PlantaDAOImpl implements PlantaDAO {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void crearTabla() {
         String sql = """
@@ -29,6 +34,9 @@ public class PlantaDAOImpl implements PlantaDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertar(Planta planta) {
         String sql = "INSERT INTO plantas (numeroPlanta, cantidadHabitaciones, especialidad) VALUES (?, ?, ?)";
@@ -43,6 +51,9 @@ public class PlantaDAOImpl implements PlantaDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Planta> listar() {
         List<Planta> lista = new ArrayList<>();
@@ -59,6 +70,9 @@ public class PlantaDAOImpl implements PlantaDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Planta buscarPorId(int id) {
         String sql = "SELECT * FROM plantas WHERE numeroPlanta = ?";
@@ -74,6 +88,9 @@ public class PlantaDAOImpl implements PlantaDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Planta> buscarPorEspecialidad(String especialidad) {
         List<Planta> lista = new ArrayList<>();
@@ -90,6 +107,9 @@ public class PlantaDAOImpl implements PlantaDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizar(Planta planta) {
         String sql = "UPDATE plantas SET cantidadHabitaciones = ?, especialidad = ? WHERE numeroPlanta = ?";
@@ -104,6 +124,9 @@ public class PlantaDAOImpl implements PlantaDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM plantas WHERE numeroPlanta = ?";
@@ -116,6 +139,13 @@ public class PlantaDAOImpl implements PlantaDAO {
         }
     }
 
+    /**
+     * Convierte una fila del {@link ResultSet} en un objeto {@link Planta}.
+     *
+     * @param rs conjunto de resultados posicionado en la fila a mapear
+     * @return objeto {@link Planta} con los datos de la fila
+     * @throws SQLException si ocurre un error al leer el ResultSet
+     */
     private Planta mapear(ResultSet rs) throws SQLException {
         return new Planta(
                 rs.getInt("numeroPlanta"),
@@ -124,4 +154,3 @@ public class PlantaDAOImpl implements PlantaDAO {
         );
     }
 }
-

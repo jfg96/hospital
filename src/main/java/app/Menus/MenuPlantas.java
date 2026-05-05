@@ -15,6 +15,10 @@ public class MenuPlantas {
 
     private final PlantaDAO dao = new PlantaDAOImpl();
 
+    /**
+     * Muestra el submenú de plantas y gestiona la opción seleccionada
+     * por el usuario hasta que éste elija volver al menú principal.
+     */
     public void mostrar() {
         int opcion;
         do {
@@ -40,6 +44,10 @@ public class MenuPlantas {
         } while (opcion != 0);
     }
 
+    /**
+     * Solicita los datos de una nueva planta por consola y la inserta
+     * en la base de datos.
+     */
     private void añadir() {
         Utilidades.titulo("NUEVA PLANTA");
         try {
@@ -56,6 +64,9 @@ public class MenuPlantas {
         Utilidades.pausar();
     }
 
+    /**
+     * Obtiene todas las plantas de la base de datos y las muestra por consola.
+     */
     private void listar() {
         Utilidades.titulo("LISTADO DE PLANTAS");
         try {
@@ -74,6 +85,10 @@ public class MenuPlantas {
         Utilidades.pausar();
     }
 
+    /**
+     * Solicita un criterio de búsqueda (número de planta o especialidad)
+     * y muestra las plantas que coinciden.
+     */
     private void buscar() {
         Utilidades.titulo("BUSCAR PLANTA");
         System.out.println("  1. Por número de planta");
@@ -105,6 +120,10 @@ public class MenuPlantas {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca una planta por su número, muestra sus datos actuales y permite
+     * modificar los campos que el usuario desee.
+     */
     private void modificar() {
         Utilidades.titulo("MODIFICAR PLANTA");
         try {
@@ -142,6 +161,10 @@ public class MenuPlantas {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca una planta por su número y, tras confirmación, la elimina de la
+     * base de datos.
+     */
     private void eliminar() {
         Utilidades.titulo("ELIMINAR PLANTA");
         try {

@@ -15,6 +15,10 @@ public class MenuMedicos {
 
     private final MedicoDAO dao = new MedicoDAOImpl();
 
+    /**
+     * Muestra el submenú de médicos y gestiona la opción seleccionada
+     * por el usuario hasta que éste elija volver al menú principal.
+     */
     public void mostrar() {
         int opcion;
         do {
@@ -40,6 +44,10 @@ public class MenuMedicos {
         } while (opcion != 0);
     }
 
+    /**
+     * Solicita los datos de un nuevo médico por consola y lo inserta
+     * en la base de datos.
+     */
     private void añadir() {
         Utilidades.titulo("NUEVO MÉDICO");
         try {
@@ -59,6 +67,9 @@ public class MenuMedicos {
         Utilidades.pausar();
     }
 
+    /**
+     * Obtiene todos los médicos de la base de datos y los muestra por consola.
+     */
     private void listar() {
         Utilidades.titulo("LISTADO DE MÉDICOS");
         try {
@@ -77,6 +88,10 @@ public class MenuMedicos {
         Utilidades.pausar();
     }
 
+    /**
+     * Solicita un criterio de búsqueda (ID, DNI, nombre o especialidad)
+     * y muestra los médicos que coinciden.
+     */
     private void buscar() {
         Utilidades.titulo("BUSCAR MÉDICO");
         System.out.println("  1. Por ID");
@@ -125,6 +140,10 @@ public class MenuMedicos {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un médico por su ID, muestra sus datos actuales y permite
+     * modificar los campos que el usuario desee.
+     */
     private void modificar() {
         Utilidades.titulo("MODIFICAR MÉDICO");
         try {
@@ -177,6 +196,10 @@ public class MenuMedicos {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un médico por su ID y, tras confirmación, lo elimina de la
+     * base de datos.
+     */
     private void eliminar() {
         Utilidades.titulo("ELIMINAR MÉDICO");
         try {

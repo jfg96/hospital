@@ -15,6 +15,10 @@ public class MenuAuxiliares {
 
     private final AuxiliarDAO dao = new AuxiliarDAOImpl();
 
+    /**
+     * Muestra el submenú de auxiliares y gestiona la opción seleccionada
+     * por el usuario hasta que éste elija volver al menú principal.
+     */
     public void mostrar() {
         int opcion;
         do {
@@ -40,6 +44,10 @@ public class MenuAuxiliares {
         } while (opcion != 0);
     }
 
+    /**
+     * Solicita los datos de un nuevo auxiliar por consola y lo inserta
+     * en la base de datos.
+     */
     private void añadir() {
         Utilidades.titulo("NUEVO AUXILIAR");
         try {
@@ -59,6 +67,9 @@ public class MenuAuxiliares {
         Utilidades.pausar();
     }
 
+    /**
+     * Obtiene todos los auxiliares de la base de datos y los muestra por consola.
+     */
     private void listar() {
         Utilidades.titulo("LISTADO DE AUXILIARES");
         try {
@@ -77,6 +88,10 @@ public class MenuAuxiliares {
         Utilidades.pausar();
     }
 
+    /**
+     * Solicita un criterio de búsqueda (ID, DNI, nombre o planta asignada)
+     * y muestra los auxiliares que coinciden.
+     */
     private void buscar() {
         Utilidades.titulo("BUSCAR AUXILIAR");
         System.out.println("  1. Por ID");
@@ -125,6 +140,10 @@ public class MenuAuxiliares {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un auxiliar por su ID, muestra sus datos actuales y permite
+     * modificar los campos que el usuario desee.
+     */
     private void modificar() {
         Utilidades.titulo("MODIFICAR AUXILIAR");
         try {
@@ -185,6 +204,10 @@ public class MenuAuxiliares {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un auxiliar por su ID y, tras confirmación, lo elimina de la
+     * base de datos.
+     */
     private void eliminar() {
         Utilidades.titulo("ELIMINAR AUXILIAR");
         try {

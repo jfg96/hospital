@@ -15,6 +15,10 @@ public class MenuHabitaciones {
 
     private final HabitacionDAO dao = new HabitacionDAOImpl();
 
+    /**
+     * Muestra el submenú de habitaciones y gestiona la opción seleccionada
+     * por el usuario hasta que éste elija volver al menú principal.
+     */
     public void mostrar() {
         int opcion;
         do {
@@ -40,6 +44,10 @@ public class MenuHabitaciones {
         } while (opcion != 0);
     }
 
+    /**
+     * Solicita los datos de una nueva habitación por consola y la inserta
+     * en la base de datos.
+     */
     private void añadir() {
         Utilidades.titulo("NUEVA HABITACIÓN");
         try {
@@ -57,6 +65,10 @@ public class MenuHabitaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Muestra el listado de habitaciones, permitiendo filtrar por planta
+     * o listar todas.
+     */
     private void listar() {
         Utilidades.titulo("LISTADO DE HABITACIONES");
         System.out.println("  1. Todas las habitaciones");
@@ -86,6 +98,9 @@ public class MenuHabitaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca una habitación por su número y muestra sus datos por consola.
+     */
     private void buscar() {
         Utilidades.titulo("BUSCAR HABITACIÓN");
         try {
@@ -102,6 +117,10 @@ public class MenuHabitaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca una habitación por su número, muestra sus datos actuales y permite
+     * modificar los campos que el usuario desee.
+     */
     private void modificar() {
         Utilidades.titulo("MODIFICAR HABITACIÓN");
         try {
@@ -139,6 +158,10 @@ public class MenuHabitaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca una habitación por su número y, tras confirmación, la elimina
+     * de la base de datos.
+     */
     private void eliminar() {
         Utilidades.titulo("ELIMINAR HABITACIÓN");
         try {

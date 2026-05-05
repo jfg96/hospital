@@ -9,10 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de HabitacionDAO para SQLite.
+ * Implementación de {@link HabitacionDAO} para SQLite.
+ *
+ * @author Carlos Fernández
  */
 public class HabitacionDAOImpl implements HabitacionDAO {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void crearTabla() {
         String sql = """
@@ -31,6 +36,9 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertar(Habitacion habitacion) {
         String sql = "INSERT INTO habitaciones (numeroHabitacion, numeroPlanta, cantidadCamas, observaciones) VALUES (?, ?, ?, ?)";
@@ -46,6 +54,9 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Habitacion> listar() {
         List<Habitacion> lista = new ArrayList<>();
@@ -60,6 +71,9 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Habitacion buscarPorId(int id) {
         String sql = "SELECT * FROM habitaciones WHERE numeroHabitacion = ?";
@@ -75,6 +89,9 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Habitacion> buscarPorPlanta(int idPlanta) {
         List<Habitacion> lista = new ArrayList<>();
@@ -91,6 +108,9 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizar(Habitacion habitacion) {
         String sql = "UPDATE habitaciones SET numeroPlanta = ?, cantidadCamas = ?, observaciones = ? WHERE numeroHabitacion = ?";
@@ -106,6 +126,9 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM habitaciones WHERE numeroHabitacion = ?";
@@ -118,6 +141,13 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         }
     }
 
+    /**
+     * Convierte una fila del {@link ResultSet} en un objeto {@link Habitacion}.
+     *
+     * @param rs conjunto de resultados posicionado en la fila a mapear
+     * @return objeto {@link Habitacion} con los datos de la fila
+     * @throws SQLException si ocurre un error al leer el ResultSet
+     */
     private Habitacion mapear(ResultSet rs) throws SQLException {
         return new Habitacion(
                 rs.getInt("numeroHabitacion"),
@@ -127,4 +157,3 @@ public class HabitacionDAOImpl implements HabitacionDAO {
         );
     }
 }
-

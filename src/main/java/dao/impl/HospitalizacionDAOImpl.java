@@ -10,10 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de HospitalizacionDAO para SQLite.
+ * Implementación de {@link HospitalizacionDAO} para SQLite.
+ *
+ * @author Carlos Fernández
  */
 public class HospitalizacionDAOImpl implements HospitalizacionDAO {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void crearTabla() {
         String sql = """
@@ -35,6 +40,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertar(Hospitalizacion hospitalizacion) {
         String sql = "INSERT INTO hospitalizaciones (idEnfermo, numeroHabitacion, numeroPlanta, fechaIngreso, fechaAlta) VALUES (?, ?, ?, ?, ?)";
@@ -54,6 +62,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Hospitalizacion> listar() {
         List<Hospitalizacion> lista = new ArrayList<>();
@@ -68,6 +79,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Hospitalizacion buscarPorId(int id) {
         String sql = "SELECT * FROM hospitalizaciones WHERE idHospitalizacion = ?";
@@ -83,6 +97,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Hospitalizacion> listarActivas() {
         List<Hospitalizacion> lista = new ArrayList<>();
@@ -97,6 +114,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Hospitalizacion> buscarPorEnfermo(int idEnfermo) {
         List<Hospitalizacion> lista = new ArrayList<>();
@@ -113,6 +133,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Hospitalizacion> buscarPorHabitacion(int idHabitacion) {
         List<Hospitalizacion> lista = new ArrayList<>();
@@ -129,6 +152,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void registrarAlta(int id, String fechaAlta) {
         String sql = "UPDATE hospitalizaciones SET fechaAlta = ? WHERE idHospitalizacion = ?";
@@ -142,6 +168,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizar(Hospitalizacion hospitalizacion) {
         String sql = "UPDATE hospitalizaciones SET idEnfermo = ?, numeroHabitacion = ?, numeroPlanta = ?, fechaAlta = ? WHERE idHospitalizacion = ?";
@@ -158,6 +187,9 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM hospitalizaciones WHERE idHospitalizacion = ?";
@@ -170,6 +202,13 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         }
     }
 
+    /**
+     * Convierte una fila del {@link ResultSet} en un objeto {@link Hospitalizacion}.
+     *
+     * @param rs conjunto de resultados posicionado en la fila a mapear
+     * @return objeto {@link Hospitalizacion} con los datos de la fila
+     * @throws SQLException si ocurre un error al leer el ResultSet
+     */
     private Hospitalizacion mapear(ResultSet rs) throws SQLException {
         Hospitalizacion h = new Hospitalizacion(
                 rs.getInt("idEnfermo"),
@@ -183,4 +222,3 @@ public class HospitalizacionDAOImpl implements HospitalizacionDAO {
         return h;
     }
 }
-

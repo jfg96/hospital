@@ -18,6 +18,12 @@ public class Utilidades {
     //  Lectura de tipos básicos
     // ──────────────────────────────────────────────
 
+    /**
+     * Lee un texto no vacío por consola. Repite la solicitud si el usuario
+     * introduce una cadena vacía.
+     * @param mensaje texto que se muestra como prompt
+     * @return la cadena introducida por el usuario (nunca vacía)
+     */
     public static String leerString(String mensaje) {
         String valor;
         do {
@@ -30,11 +36,22 @@ public class Utilidades {
         return valor;
     }
 
+    /**
+     * Lee un texto por consola permitiendo que esté vacío.
+     * @param mensaje texto que se muestra como prompt
+     * @return la cadena introducida por el usuario (puede estar vacía)
+     */
     public static String leerStringOpcional(String mensaje) {
         System.out.print(mensaje);
         return sc.nextLine().trim();
     }
 
+    /**
+     * Lee un número entero por consola. Repite la solicitud si la entrada
+     * no es un entero válido.
+     * @param mensaje texto que se muestra como prompt
+     * @return el entero introducido por el usuario
+     */
     public static int leerInt(String mensaje) {
         while (true) {
             System.out.print(mensaje);
@@ -47,6 +64,12 @@ public class Utilidades {
         }
     }
 
+    /**
+     * Lee un número entero estrictamente positivo (mayor que 0). Repite la
+     * solicitud si el valor introducido no cumple la condición.
+     * @param mensaje texto que se muestra como prompt
+     * @return el entero positivo introducido por el usuario
+     */
     public static int leerIntPositivo(String mensaje) {
         int valor;
         do {
@@ -58,6 +81,12 @@ public class Utilidades {
         return valor;
     }
 
+    /**
+     * Lee un número decimal por consola. Repite la solicitud si la entrada
+     * no es un número válido.
+     * @param mensaje texto que se muestra como prompt
+     * @return el número decimal introducido por el usuario
+     */
     public static double leerDouble(String mensaje) {
         while (true) {
             System.out.print(mensaje);
@@ -70,6 +99,12 @@ public class Utilidades {
         }
     }
 
+    /**
+     * Lee un número decimal estrictamente positivo (mayor que 0). Repite la
+     * solicitud si el valor introducido no cumple la condición.
+     * @param mensaje texto que se muestra como prompt
+     * @return el número decimal positivo introducido por el usuario
+     */
     public static double leerDoublePositivo(String mensaje) {
         double valor;
         do {
@@ -85,6 +120,12 @@ public class Utilidades {
     //  Validación de campos específicos
     // ──────────────────────────────────────────────
 
+    /**
+     * Lee y valida un DNI español (8 dígitos + 1 letra mayúscula). Repite la
+     * solicitud si el formato no es correcto.
+     * @param mensaje texto que se muestra como prompt
+     * @return el DNI válido introducido por el usuario (en mayúsculas)
+     */
     public static String leerDni(String mensaje) {
         String dni;
         do {
@@ -97,6 +138,12 @@ public class Utilidades {
         return dni;
     }
 
+    /**
+     * Lee y valida un número de teléfono de 9 dígitos. Repite la solicitud
+     * si el formato no es correcto.
+     * @param mensaje texto que se muestra como prompt
+     * @return el teléfono válido introducido por el usuario
+     */
     public static String leerTelefono(String mensaje) {
         String telefono;
         do {
@@ -109,6 +156,12 @@ public class Utilidades {
         return telefono;
     }
 
+    /**
+     * Lee y valida una fecha en formato {@code dd/MM/yyyy}. Repite la
+     * solicitud si el formato no es correcto.
+     * @param mensaje texto que se muestra como prompt (sin el formato)
+     * @return la fecha introducida como {@link LocalDate}
+     */
     public static LocalDate leerFecha(String mensaje) {
         while (true) {
             String entrada = leerString(mensaje + " (dd/MM/yyyy): ");
@@ -120,11 +173,24 @@ public class Utilidades {
         }
     }
 
+    /**
+     * Lee una fecha en formato {@code dd/MM/yyyy} y la devuelve como
+     * cadena en formato ISO ({@code yyyy-MM-dd}).
+     * @param mensaje texto que se muestra como prompt
+     * @return la fecha introducida en formato {@code yyyy-MM-dd}
+     */
     public static String leerFechaComoString(String mensaje) {
         LocalDate fecha = leerFecha(mensaje);
         return fecha.toString();
     }
 
+    /**
+     * Lee una fecha en formato {@code dd/MM/yyyy} de forma opcional. Si el
+     * usuario deja el campo vacío o introduce un formato incorrecto, devuelve
+     * {@code null}.
+     * @param mensaje texto que se muestra como prompt (sin el formato)
+     * @return la fecha introducida como {@link LocalDate}, o {@code null} si se omite
+     */
     public static LocalDate leerFechaOpcional(String mensaje) {
         System.out.print(mensaje + " (dd/MM/yyyy, vacío para omitir): ");
         String entrada = sc.nextLine().trim();
@@ -143,10 +209,17 @@ public class Utilidades {
     //  Utilidades de presentación
     // ──────────────────────────────────────────────
 
+    /**
+     * Imprime una línea separadora decorativa por consola.
+     */
     public static void separador() {
         System.out.println("═══════════════════════════════════════════════════");
     }
 
+    /**
+     * Imprime un título formateado con separadores decorativos por consola.
+     * @param texto texto del título a mostrar
+     */
     public static void titulo(String texto) {
         System.out.println();
         separador();
@@ -154,15 +227,23 @@ public class Utilidades {
         separador();
     }
 
+    /**
+     * Pausa la ejecución hasta que el usuario pulse Enter.
+     */
     public static void pausar() {
         System.out.print("\nPulsa Enter para continuar...");
         sc.nextLine();
     }
 
+    /**
+     * Solicita confirmación al usuario mediante una pregunta de sí/no.
+     * @param mensaje texto de la pregunta que se muestra al usuario
+     * @return {@code true} si el usuario responde afirmativamente ({@code s}, {@code si} o {@code sí});
+     *         {@code false} en cualquier otro caso
+     */
     public static boolean confirmar(String mensaje) {
         System.out.print(mensaje + " (s/n): ");
         String resp = sc.nextLine().trim().toLowerCase();
         return resp.equals("s") || resp.equals("si") || resp.equals("sí");
     }
 }
-

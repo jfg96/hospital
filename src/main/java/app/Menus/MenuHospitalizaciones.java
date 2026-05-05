@@ -16,6 +16,10 @@ public class MenuHospitalizaciones {
 
     private final HospitalizacionDAO dao = new HospitalizacionDAOImpl();
 
+    /**
+     * Muestra el submenú de hospitalizaciones y gestiona la opción seleccionada
+     * por el usuario hasta que éste elija volver al menú principal.
+     */
     public void mostrar() {
         int opcion;
         do {
@@ -45,6 +49,10 @@ public class MenuHospitalizaciones {
         } while (opcion != 0);
     }
 
+    /**
+     * Solicita los datos de ingreso de un enfermo y registra una nueva
+     * hospitalización en la base de datos.
+     */
     private void registrarIngreso() {
         Utilidades.titulo("REGISTRAR HOSPITALIZACIÓN");
         try {
@@ -62,6 +70,10 @@ public class MenuHospitalizaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Obtiene todas las hospitalizaciones de la base de datos y las muestra
+     * por consola.
+     */
     private void listarTodas() {
         Utilidades.titulo("TODAS LAS HOSPITALIZACIONES");
         try {
@@ -80,6 +92,10 @@ public class MenuHospitalizaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Obtiene únicamente las hospitalizaciones activas (sin fecha de alta)
+     * y las muestra por consola.
+     */
     private void listarActivas() {
         Utilidades.titulo("HOSPITALIZACIONES ACTIVAS");
         try {
@@ -98,6 +114,10 @@ public class MenuHospitalizaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Solicita un criterio de búsqueda (ID, enfermo o habitación) y muestra
+     * las hospitalizaciones que coinciden.
+     */
     private void buscar() {
         Utilidades.titulo("BUSCAR HOSPITALIZACIONES");
         System.out.println("  1. Por ID de hospitalización");
@@ -139,6 +159,10 @@ public class MenuHospitalizaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Lista las hospitalizaciones activas y permite registrar la fecha de alta
+     * de la que el usuario seleccione.
+     */
     private void darAlta() {
         Utilidades.titulo("DAR DE ALTA (REGISTRAR FECHA DE ALTA)");
         try {
@@ -166,6 +190,9 @@ public class MenuHospitalizaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca una hospitalización por su ID y permite modificar su fecha de alta.
+     */
     private void modificar() {
         Utilidades.titulo("MODIFICAR HOSPITALIZACIÓN");
         try {
@@ -192,6 +219,10 @@ public class MenuHospitalizaciones {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca una hospitalización por su ID y, tras confirmación, la elimina
+     * de la base de datos.
+     */
     private void eliminar() {
         Utilidades.titulo("ELIMINAR HOSPITALIZACIÓN");
         try {

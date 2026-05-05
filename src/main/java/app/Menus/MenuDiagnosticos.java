@@ -16,6 +16,10 @@ public class MenuDiagnosticos {
 
     private final DiagnosticoDAO dao = new DiagnosticoDAOImpl();
 
+    /**
+     * Muestra el submenú de diagnósticos y gestiona la opción seleccionada
+     * por el usuario hasta que éste elija volver al menú principal.
+     */
     public void mostrar() {
         int opcion;
         do {
@@ -41,6 +45,10 @@ public class MenuDiagnosticos {
         } while (opcion != 0);
     }
 
+    /**
+     * Solicita los datos de un nuevo diagnóstico por consola y lo inserta
+     * en la base de datos.
+     */
     private void añadir() {
         Utilidades.titulo("NUEVO DIAGNÓSTICO");
         try {
@@ -58,6 +66,9 @@ public class MenuDiagnosticos {
         Utilidades.pausar();
     }
 
+    /**
+     * Obtiene todos los diagnósticos de la base de datos y los muestra por consola.
+     */
     private void listar() {
         Utilidades.titulo("LISTADO DE DIAGNÓSTICOS");
         try {
@@ -76,6 +87,10 @@ public class MenuDiagnosticos {
         Utilidades.pausar();
     }
 
+    /**
+     * Solicita un criterio de búsqueda (ID, enfermo, médico o fecha) y muestra
+     * los diagnósticos que coinciden.
+     */
     private void buscar() {
         Utilidades.titulo("BUSCAR DIAGNÓSTICOS");
         System.out.println("  1. Por ID del diagnóstico");
@@ -130,6 +145,9 @@ public class MenuDiagnosticos {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un diagnóstico por su ID y permite modificar su informe.
+     */
     private void modificar() {
         Utilidades.titulo("MODIFICAR DIAGNÓSTICO");
         try {
@@ -158,6 +176,10 @@ public class MenuDiagnosticos {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un diagnóstico por su ID y, tras confirmación, lo elimina de la
+     * base de datos.
+     */
     private void eliminar() {
         Utilidades.titulo("ELIMINAR DIAGNÓSTICO");
         try {

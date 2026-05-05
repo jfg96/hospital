@@ -10,10 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de DiagnosticoDAO para SQLite.
+ * Implementación de {@link DiagnosticoDAO} para SQLite.
+ *
+ * @author Carlos Fernández
  */
 public class DiagnosticoDAOImpl implements DiagnosticoDAO {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void crearTabla() {
         String sql = """
@@ -33,6 +38,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertar(Diagnostico diagnostico) {
         String sql = "INSERT INTO diagnosticos (dniMedico, idEnfermo, fecha, informe) VALUES (?, ?, ?, ?)";
@@ -48,6 +56,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Diagnostico> listar() {
         List<Diagnostico> lista = new ArrayList<>();
@@ -62,6 +73,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Diagnostico buscarPorId(int id) {
         String sql = "SELECT * FROM diagnosticos WHERE codigo = ?";
@@ -77,6 +91,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Diagnostico> buscarPorEnfermo(int idEnfermo) {
         List<Diagnostico> lista = new ArrayList<>();
@@ -93,6 +110,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Diagnostico> buscarPorMedico(int idMedico) {
         List<Diagnostico> lista = new ArrayList<>();
@@ -113,6 +133,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Diagnostico> buscarPorFecha(String fecha) {
         List<Diagnostico> lista = new ArrayList<>();
@@ -129,6 +152,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizar(Diagnostico diagnostico) {
         String sql = "UPDATE diagnosticos SET dniMedico = ?, idEnfermo = ?, fecha = ?, informe = ? WHERE codigo = ?";
@@ -145,6 +171,9 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM diagnosticos WHERE codigo = ?";
@@ -157,6 +186,13 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         }
     }
 
+    /**
+     * Convierte una fila del {@link ResultSet} en un objeto {@link Diagnostico}.
+     *
+     * @param rs conjunto de resultados posicionado en la fila a mapear
+     * @return objeto {@link Diagnostico} con los datos de la fila
+     * @throws SQLException si ocurre un error al leer el ResultSet
+     */
     private Diagnostico mapear(ResultSet rs) throws SQLException {
         return new Diagnostico(
                 rs.getInt("codigo"),
@@ -167,4 +203,3 @@ public class DiagnosticoDAOImpl implements DiagnosticoDAO {
         );
     }
 }
-

@@ -16,6 +16,10 @@ public class MenuEnfermos {
 
     private final EnfermoDAO dao = new EnfermoDAOImpl();
 
+    /**
+     * Muestra el submenú de enfermos y gestiona la opción seleccionada
+     * por el usuario hasta que éste elija volver al menú principal.
+     */
     public void mostrar() {
         int opcion;
         do {
@@ -41,6 +45,10 @@ public class MenuEnfermos {
         } while (opcion != 0);
     }
 
+    /**
+     * Solicita los datos de un nuevo enfermo por consola y lo inserta
+     * en la base de datos.
+     */
     private void añadir() {
         Utilidades.titulo("NUEVO ENFERMO");
         try {
@@ -59,6 +67,9 @@ public class MenuEnfermos {
         Utilidades.pausar();
     }
 
+    /**
+     * Obtiene todos los enfermos de la base de datos y los muestra por consola.
+     */
     private void listar() {
         Utilidades.titulo("LISTADO DE ENFERMOS");
         try {
@@ -77,6 +88,10 @@ public class MenuEnfermos {
         Utilidades.pausar();
     }
 
+    /**
+     * Solicita un criterio de búsqueda (ID, nombre o DNI) y muestra los
+     * enfermos que coinciden.
+     */
     private void buscar() {
         Utilidades.titulo("BUSCAR ENFERMO");
         System.out.println("  1. Por ID");
@@ -115,6 +130,10 @@ public class MenuEnfermos {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un enfermo por su ID, muestra sus datos actuales y permite
+     * modificar los campos que el usuario desee.
+     */
     private void modificar() {
         Utilidades.titulo("MODIFICAR ENFERMO");
         try {
@@ -156,6 +175,10 @@ public class MenuEnfermos {
         Utilidades.pausar();
     }
 
+    /**
+     * Busca un enfermo por su ID y, tras confirmación, lo elimina de la
+     * base de datos.
+     */
     private void eliminar() {
         Utilidades.titulo("ELIMINAR ENFERMO");
         try {

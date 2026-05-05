@@ -9,10 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de MedicoDAO para SQLite.
+ * Implementación de {@link MedicoDAO} para SQLite.
+ *
+ * @author Carlos Fernández
  */
 public class MedicoDAOImpl implements MedicoDAO {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void crearTabla() {
         String sql = """
@@ -33,6 +38,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertar(Medico medico) {
         String sql = "INSERT INTO medicos (nombre, direccion, telefono, dni, sueldo, especialidad) VALUES (?, ?, ?, ?, ?, ?)";
@@ -50,6 +58,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Medico> listar() {
         List<Medico> lista = new ArrayList<>();
@@ -64,6 +75,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Medico buscarPorId(int id) {
         String sql = "SELECT * FROM medicos WHERE id = ?";
@@ -79,6 +93,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Medico buscarPorDni(String dni) {
         String sql = "SELECT * FROM medicos WHERE dni = ?";
@@ -94,6 +111,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Medico> buscarPorNombre(String nombre) {
         List<Medico> lista = new ArrayList<>();
@@ -110,6 +130,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Medico> buscarPorEspecialidad(String especialidad) {
         List<Medico> lista = new ArrayList<>();
@@ -126,6 +149,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizar(Medico medico) {
         String sql = "UPDATE medicos SET nombre = ?, direccion = ?, telefono = ?, sueldo = ?, especialidad = ? WHERE dni = ?";
@@ -143,6 +169,9 @@ public class MedicoDAOImpl implements MedicoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM medicos WHERE id = ?";
@@ -155,6 +184,13 @@ public class MedicoDAOImpl implements MedicoDAO {
         }
     }
 
+    /**
+     * Convierte una fila del {@link ResultSet} en un objeto {@link Medico}.
+     *
+     * @param rs conjunto de resultados posicionado en la fila a mapear
+     * @return objeto {@link Medico} con los datos de la fila
+     * @throws SQLException si ocurre un error al leer el ResultSet
+     */
     private Medico mapear(ResultSet rs) throws SQLException {
         Medico m = new Medico(
                 rs.getString("nombre"),
@@ -168,4 +204,3 @@ public class MedicoDAOImpl implements MedicoDAO {
         return m;
     }
 }
-

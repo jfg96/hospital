@@ -10,10 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de EnfermoDAO para SQLite.
+ * Implementación de {@link EnfermoDAO} para SQLite.
+ *
+ * @author Carlos Fernández
  */
 public class EnfermoDAOImpl implements EnfermoDAO {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void crearTabla() {
         String sql = """
@@ -33,6 +38,9 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void insertar(Enfermo enfermo) {
         String sql = "INSERT INTO enfermos (nombre, direccion, dni, telefono, fechaNacimiento) VALUES (?, ?, ?, ?, ?)";
@@ -49,6 +57,9 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Enfermo> listar() {
         List<Enfermo> lista = new ArrayList<>();
@@ -63,6 +74,9 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Enfermo buscarPorId(int id) {
         String sql = "SELECT * FROM enfermos WHERE idEnfermo = ?";
@@ -78,6 +92,9 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Enfermo buscarPorDni(String dni) {
         String sql = "SELECT * FROM enfermos WHERE dni = ?";
@@ -93,6 +110,9 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Enfermo> buscarPorNombre(String nombre) {
         List<Enfermo> lista = new ArrayList<>();
@@ -109,6 +129,9 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         return lista;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void actualizar(Enfermo enfermo) {
         String sql = "UPDATE enfermos SET nombre = ?, direccion = ?, telefono = ?, fechaNacimiento = ? WHERE dni = ?";
@@ -125,6 +148,9 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM enfermos WHERE idEnfermo = ?";
@@ -137,6 +163,13 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         }
     }
 
+    /**
+     * Convierte una fila del {@link ResultSet} en un objeto {@link Enfermo}.
+     *
+     * @param rs conjunto de resultados posicionado en la fila a mapear
+     * @return objeto {@link Enfermo} con los datos de la fila
+     * @throws SQLException si ocurre un error al leer el ResultSet
+     */
     private Enfermo mapear(ResultSet rs) throws SQLException {
         return new Enfermo(
                 rs.getInt("idEnfermo"),
@@ -148,4 +181,3 @@ public class EnfermoDAOImpl implements EnfermoDAO {
         );
     }
 }
-
